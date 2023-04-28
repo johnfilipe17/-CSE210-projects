@@ -46,7 +46,7 @@ class Program
 
                 if (userNumber > largeNumber)
                 {
-                    largeNumber = userNumber;
+                    largeNumber = number;
                 }
             }
             Console.WriteLine($"The max is: {largeNumber}");
