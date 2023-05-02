@@ -39,17 +39,18 @@ class Program
             Console.WriteLine($"The average is: {average}");
 
             //finding the largest number
-            int largeNumber = numbers [0];
-            
-            foreach (int number in numbers)
-            {
+             int max = numbers[0];
 
-                if (userNumber > largeNumber)
-                {
-                    largeNumber = number;
-                }
+        foreach (int number in numbers)
+        {
+            if (number > max)
+            {
+                // if this number is greater than the max, we have found the new max!
+                max = number;
             }
-            Console.WriteLine($"The max is: {largeNumber}");
+        }
+
+        Console.WriteLine($"The max is: {max}");
         }
 
        
