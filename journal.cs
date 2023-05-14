@@ -151,7 +151,7 @@ namespace JournalApp
             prompts.Add("What was the strongest emotion I felt today?");
             prompts.Add("If I had one thing I could do over today, what would it be?");
         }
-
+        //final
         public string GetPrompt()
         {
             Random rand = new Random();
