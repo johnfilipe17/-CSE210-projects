@@ -1,5 +1,3 @@
-
-<Project Sdk="Microsoft.NET.Sdk">
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -120,12 +118,3 @@ class ScriptureMemorizer
         return visibleWords;
     }
 }
-
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
-  </PropertyGroup>
-
-</Project>

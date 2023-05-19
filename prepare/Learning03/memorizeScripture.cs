@@ -1,24 +1,12 @@
-
-<Project Sdk="Microsoft.NET.Sdk">
 using System;
 using System.Collections.Generic;
-using System.IO;
-using Newtonsoft.Json;
 
 class Program
 {
     static void Main()
     {
-        List<Scripture> scriptures = LoadScripturesFromJson("scriptures.json");
-        if (scriptures.Count == 0)
-        {
-            Console.WriteLine("No scriptures found.");
-            return;
-        }
-
-        var random = new Random();
-        var selectedScripture = scriptures[random.Next(scriptures.Count)];
-        var memorizer = new ScriptureMemorizer(selectedScripture);
+       var scripture = new Scripture("Mosiah 3:19", "For the natural man is an enemy to God, and has been from the fall of Adam, and will be, forever and ever, unless he yields to the enticings of the Holy Spirit, and putteth off the natural man and becometh a saint through the atonement of Christ the Lord, and becometh as a child, submissive, meek, humble, patient, full of love, willing to submit to all things which the Lord seeth fit to inflict upon him, even as a child doth submit to his father.");
+        var memorizer = new ScriptureMemorizer(scripture);
 
         while (true)
         {
@@ -34,19 +22,13 @@ class Program
             memorizer.HideRandomWord();
         }
     }
-
-    static List<Scripture> LoadScripturesFromJson(string filename)
-    {
-        string json = File.ReadAllText(filename);
-        return JsonConvert.DeserializeObject<List<Scripture>>(json);
-    }
 }
 
 class Scripture
 {
-    public string Reference { get; set; }
-    public string Text { get; set; }
-    public List<Word> Words { get; set; }
+    public string Reference { get; }
+    public string Text { get; }
+    public List<Word> Words { get; }
 
     public Scripture(string reference, string text)
     {
@@ -60,6 +42,16 @@ class Scripture
             var word = new Word(wordText);
             Words.Add(word);
         }
+    }
+}
+
+class Reference
+{
+    public string Text { get; }
+
+    public Reference(string text)
+    {
+        Text = text;
     }
 }
 
@@ -120,12 +112,3 @@ class ScriptureMemorizer
         return visibleWords;
     }
 }
-
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
-  </PropertyGroup>
-
-</Project>
