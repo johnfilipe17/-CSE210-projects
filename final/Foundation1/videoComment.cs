@@ -9,101 +9,84 @@ interface IComment
 
 class Comment : IComment
 {
-    public string Name { get; }
-    public string Text { get; }
+    private string _name;
+    private string _text;
 
     public Comment(string name, string text)
     {
-        Name = name;
-        Text = text;
+        _name = name;
+        _text = text;
     }
 
     public string GetName()
     {
-        return Name;
+        return _name;
     }
 
     public string GetText()
     {
-        return Text;
+        return _text;
     }
 }
 
 interface IVideo
 {
-    string GetTitle();
-    string GetAuthor();
-    int GetLength();
+    string Title { get; }
+    string Author { get; }
+    int Length { get; }
     void AddComment(string name, string text);
     int GetNumComments();
-    void DisplayComments();
+    IEnumerable<IComment> GetComments();
 }
 
 class Video : IVideo
 {
-    public string Title { get; }
-    public string Author { get; }
-    public int Length { get; }
-    private List<IComment> comments;
+    private List<IComment> _comments;
 
     public Video(string title, string author, int length)
     {
         Title = title;
         Author = author;
         Length = length;
-        comments = new List<IComment>();
+        _comments = new List<IComment>();
     }
+
+    public string Title { get; }
+    public string Author { get; }
+    public int Length { get; }
 
     public void AddComment(string name, string text)
     {
         IComment comment = new Comment(name, text);
-        comments.Add(comment);
+        _comments.Add(comment);
     }
 
     public int GetNumComments()
     {
-        return comments.Count;
+        return _comments.Count;
     }
 
-    public void DisplayComments()
+    public IEnumerable<IComment> GetComments()
     {
-        foreach (IComment comment in comments)
-        {
-            Console.WriteLine(comment.GetName() + ": " + comment.GetText());
-        }
-    }
-
-    public string GetTitle()
-    {
-        return Title;
-    }
-
-    public string GetAuthor()
-    {
-        return Author;
-    }
-
-    public int GetLength()
-    {
-        return Length;
+        return _comments;
     }
 }
 
 class Program
 {
-    static void Main()
+    static void Main(string[] args)
     {
         // Create videos
-        IVideo video1 = new Video("Ronaldo best skills Compilation", "Best skills", 180);
-        video1.AddComment("soccerLover123", "These moves are insane!");
-        video1.AddComment("RonalFanatic", "I can't stop watching this!");
+        IVideo video1 = new Video("Funny Cats Compilation", "CrazyCatLady", 180);
+        video1.AddComment("CatLover123", "These cats are hilarious!");
+        video1.AddComment("KittenFanatic", "I can't stop watching this!");
 
         IVideo video2 = new Video("Cooking Tutorial: Chocolate Cake", "ChefGordon", 300);
         video2.AddComment("FoodieForever", "The cake looks delicious!");
-        video2.AddComment("BakingQueen", "I'll try this recipe ASAP!");
+        video2.AddComment("BakingQueen", "Can't wait to try this recipe!");
 
-        IVideo video3 = new Video("Before I forget Guitar Cover", "RockstarMusic", 420);
-        video3.AddComment("MusicLover22", "Great tutorial!");
+        IVideo video3 = new Video("Guitar Lesson: Beginner's Guide", "RockstarMusic", 420);
+        video3.AddComment("MusicLover22", "Great tutorial for beginners!");
         video3.AddComment("GuitarFan101", "Thanks for sharing the chords!");
 
         // Store videos in a list
@@ -112,12 +95,15 @@ class Program
         // Display video information and comments
         foreach (IVideo video in videos)
         {
-            Console.WriteLine("Title: " + video.GetTitle());
-            Console.WriteLine("Author: " + video.GetAuthor());
-            Console.WriteLine("Length: " + video.GetLength() + " seconds");
+            Console.WriteLine("Title: " + video.Title);
+            Console.WriteLine("Author: " + video.Author);
+            Console.WriteLine("Length: " + video.Length + " seconds");
             Console.WriteLine("Number of Comments: " + video.GetNumComments());
             Console.WriteLine("Comments:");
-            video.DisplayComments();
+            foreach (IComment comment in video.GetComments())
+            {
+                Console.WriteLine(comment.GetName() + ": " + comment.GetText());
+            }
             Console.WriteLine();
         }
     }

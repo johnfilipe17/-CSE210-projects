@@ -1,178 +1,13 @@
 using System;
 using System.Collections.Generic;
 
-public class Order
-{
-    private List<Product> products;
-    private Customer customer;
-
-    public Order(Customer customer)
-    {
-        products = new List<Product>();
-        this.customer = customer;
-    }
-
-    public void AddProduct(Product product)
-    {
-        products.Add(product);
-    }
-
-    public float CalculateTotalCost()
-    {
-        float totalCost = 0;
-        foreach (Product product in products)
-        {
-            totalCost += product.Price * product.Quantity;
-        }
-
-        totalCost += customer.IsInUSA() ? 5 : 35;
-
-        return totalCost;
-    }
-
-    public string GetPackingLabel()
-    {
-        string packingLabel = "Packing Label:\n";
-        foreach (Product product in products)
-        {
-            packingLabel += $"Name: {product.Name}, Product ID: {product.ProductId}\n";
-        }
-
-        return packingLabel;
-    }
-
-    public string GetShippingLabel()
-    {
-        return $"Shipping Label:\nName: {customer.Name}\nAddress: {customer.Address.GetFullAddress()}";
-    }
-}
-
-public class Product
-{
-    private string name;
-    private string productId;
-    private float price;
-    private int quantity;
-
-    public Product(string name, string productId, float price, int quantity)
-    {
-        this.name = name;
-        this.productId = productId;
-        this.price = price;
-        this.quantity = quantity;
-    }
-
-    public string Name
-    {
-        get { return name; }
-        set { name = value; }
-    }
-
-    public string ProductId
-    {
-        get { return productId; }
-        set { productId = value; }
-    }
-
-    public float Price
-    {
-        get { return price; }
-        set { price = value; }
-    }
-
-    public int Quantity
-    {
-        get { return quantity; }
-        set { quantity = value; }
-    }
-}
-
-public class Customer
-{
-    private string name;
-    private Address address;
-
-    public Customer(string name, Address address)
-    {
-        this.name = name;
-        this.address = address;
-    }
-
-    public string Name
-    {
-        get { return name; }
-        set { name = value; }
-    }
-
-    public Address Address
-    {
-        get { return address; }
-        set { address = value; }
-    }
-
-    public bool IsInUSA()
-    {
-        return address.IsInUSA();
-    }
-}
-
-public class Address
-{
-    private string streetAddress;
-    private string city;
-    private string stateProvince;
-    private string country;
-
-    public Address(string streetAddress, string city, string stateProvince, string country)
-    {
-        this.streetAddress = streetAddress;
-        this.city = city;
-        this.stateProvince = stateProvince;
-        this.country = country;
-    }
-
-    public string StreetAddress
-    {
-        get { return streetAddress; }
-        set { streetAddress = value; }
-    }
-
-    public string City
-    {
-        get { return city; }
-        set { city = value; }
-    }
-
-    public string StateProvince
-    {
-        get { return stateProvince; }
-        set { stateProvince = value; }
-    }
-
-    public string Country
-    {
-        get { return country; }
-        set { country = value; }
-    }
-
-    public bool IsInUSA()
-    {
-        return country == "USA";
-    }
-
-    public string GetFullAddress()
-    {
-        return $"{streetAddress}\n{city}, {stateProvince}\n{country}";
-    }
-}
-
 public class Program
 {
     public static void Main(string[] args)
     {
         // Create a customer
         Address customerAddress = new Address("123 Main St", "Cityville", "State A", "USA");
-        Customer customer = new Customer("Jane Doe", customerAddress);
+        Customer customer = new Customer("John Doe", customerAddress);
 
         // Create an order
         Order order = new Order(customer);
@@ -199,3 +34,169 @@ public class Program
         // Wait for user input to exit
         Console.ReadLine();
     }
+
+    public class Order
+    {
+        private List<Product> _products;
+        private Customer _customer;
+
+        public Order(Customer customer)
+        {
+            _products = new List<Product>();
+            _customer = customer;
+        }
+
+        public void AddProduct(Product product)
+        {
+            _products.Add(product);
+        }
+
+        public float CalculateTotalCost()
+        {
+            float totalCost = 0;
+            foreach (Product product in _products)
+            {
+                totalCost += product.Price * product.Quantity;
+            }
+
+            totalCost += _customer.IsInUSA() ? 5 : 35;
+
+            return totalCost;
+        }
+
+        public string GetPackingLabel()
+        {
+            string packingLabel = "Packing Label:\n";
+            foreach (Product product in _products)
+            {
+                packingLabel += $"Name: {product.Name}, Product ID: {product.ProductId}\n";
+            }
+
+            return packingLabel;
+        }
+
+        public string GetShippingLabel()
+        {
+            return $"Shipping Label:\nName: {_customer.Name}\nAddress: {_customer.Address.GetFullAddress()}";
+        }
+    }
+
+    public class Product
+    {
+        private string _name;
+        private string _productId;
+        private float _price;
+        private int _quantity;
+
+        public Product(string name, string productId, float price, int quantity)
+        {
+            _name = name;
+            _productId = productId;
+            _price = price;
+            _quantity = quantity;
+        }
+
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
+
+        public string ProductId
+        {
+            get { return _productId; }
+            set { _productId = value; }
+        }
+
+        public float Price
+        {
+            get { return _price; }
+            set { _price = value; }
+        }
+
+        public int Quantity
+        {
+            get { return _quantity; }
+            set { _quantity = value; }
+        }
+    }
+
+    public class Customer
+    {
+        private string _name;
+        private Address _address;
+
+        public Customer(string name, Address address)
+        {
+            _name = name;
+            _address = address;
+        }
+
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
+
+        public Address Address
+        {
+            get { return _address; }
+            set { _address = value; }
+        }
+
+        public bool IsInUSA()
+        {
+            return _address.IsInUSA();
+        }
+    }
+
+    public class Address
+    {
+        private string _streetAddress;
+        private string _city;
+        private string _stateProvince;
+        private string _country;
+
+        public Address(string streetAddress, string city, string stateProvince, string country)
+        {
+            _streetAddress = streetAddress;
+            _city = city;
+            _stateProvince = stateProvince;
+            _country = country;
+        }
+
+        public string StreetAddress
+        {
+            get { return _streetAddress; }
+            set { _streetAddress = value; }
+        }
+
+        public string City
+        {
+            get { return _city; }
+            set { _city = value; }
+        }
+
+        public string StateProvince
+        {
+            get { return _stateProvince; }
+            set { _stateProvince = value; }
+        }
+
+        public string Country
+        {
+            get { return _country; }
+            set { _country = value; }
+        }
+
+        public bool IsInUSA()
+        {
+            return _country == "USA";
+        }
+
+        public string GetFullAddress()
+        {
+            return $"{_streetAddress}\n{_city}, {_stateProvince}\n{_country}";
+        }
+    }
+}
